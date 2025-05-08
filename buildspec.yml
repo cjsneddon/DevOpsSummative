@@ -11,11 +11,11 @@ phases:
   build:
     commands:
       - echo "Running unit tests..."
-      - mvn test | tee target/test-output.log || { echo "Unit tests failed! Stopping pipeline."; exit 1; }
+      - mvn test | tee target/test-output.log || echo "Unit tests failed! Stopping pipeline." && exit 1
       - echo "Unit tests completed."
       - echo "Building the project..."
       - mvn package  # Builds the application AFTER passing tests
-      - chmod +x scripts/deploy.sh
+      - chmod +x scripts/deploy.sh  # Ensure deployment script is executable
   post_build:
     commands:
       - ls -lh target/
