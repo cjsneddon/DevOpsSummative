@@ -11,7 +11,8 @@ phases:
   build:
     commands:
       - echo "Running unit tests..."
-      - 'mvn test | tee target/test-output.log || echo "Unit tests failed! Stopping pipeline." && exit 1'
+      - mvn test | tee target/test-output.log || echo "Unit tests failed! Stopping pipeline."
+      - if [ $? -ne 0 ]; then exit 1; fi
       - echo "Unit tests completed."
       - echo "Building the project..."
       - mvn package  # Builds the application AFTER passing tests
