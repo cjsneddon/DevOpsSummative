@@ -20,7 +20,7 @@ phases:
   post_build:
     commands:
       - ls -lh target/
-      - if [ ! -f target/DevOpsSummative-1.0-SNAPSHOT.jar ]; then echo "ERROR: Build artifact missing!"; exit 1; fi
+      - 'if [ ! -f target/DevOpsSummative-1.0-SNAPSHOT.jar ]; then echo "ERROR: Build artifact missing!"; exit 1; fi'
       - echo "Build completed successfully."
 
 artifacts:
