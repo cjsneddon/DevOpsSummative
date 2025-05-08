@@ -1,0 +1,30 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto17
+    commands:
+      - echo "Installing dependencies..."
+      - mvn clean install  # Ensures dependencies are resolved
+      - mkdir -p target
+  build:
+    commands:
+      - echo "Running unit tests..."
+      - mvn test | tee target/test-output.log || { echo "Unit tests failed! Stopping pipeline."; exit 1; }
+      - echo "Unit tests completed."
+      - echo "Building the project..."
+      - mvn package  # Builds the application AFTER passing tests
+      - chmod +x scripts/deploy.sh
+  post_build:
+    commands:
+      - ls -lh target/
+      - if [ ! -f target/DevOpsSummative-1.0-SNAPSHOT.jar ]; then echo "ERROR: Build artifact missing!"; exit 1; fi
+      - echo "Build completed successfully."
+
+artifacts:
+  files:
+    - appspec.yml
+    - target/DevOpsSummative-1.0-SNAPSHOT.jar
+    - scripts/deploy.sh
+    - target/surefire-reports/*.xml  # Stores JUnit test results
