@@ -8,7 +8,6 @@ files:
 
 permissions:
   - object: /home/ec2-user/app/DevOpsSummative-1.0-SNAPSHOT.jar
-    pattern: "*.jar"
     owner: ec2-user
     mode: 755
   - object: /home/ec2-user/scripts/deploy.sh
