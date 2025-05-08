@@ -82,10 +82,6 @@ for i in {1..10}; do
   fi
 done
 
-LOG_GROUP="/aws/code-deploy/logs"
-aws logs create-log-group --log-group-name "$LOG_GROUP" || true
-aws logs create-log-stream --log-group-name "$LOG_GROUP" --log-stream-name "DeployLog" || true
-
 #timestamped logging
 echo "$(date) - Application started" >> "$LOG_FILE"
 
