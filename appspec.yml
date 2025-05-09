@@ -6,14 +6,6 @@ files:
   - source: scripts/deploy.sh
     destination: /home/ec2-user/scripts
 
-permissions:
-  - object: /home/ec2-user/app/DevOpsSummative-1.0-SNAPSHOT.jar
-    owner: ec2-user
-    mode: 755
-  - object: /home/ec2-user/scripts/deploy.sh
-    owner: ec2-user
-    mode: 755
-
 hooks:
   AfterInstall:
     - location: scripts/deploy.sh
