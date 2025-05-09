@@ -5,6 +5,7 @@ set -e
 APP_DIR="/home/ec2-user/app"
 JAR_NAME="DevOpsSummative-1.0-SNAPSHOT.jar"
 LOG_FILE="app.log"
+AWS_REGION="eu-west-2"
 
 # Ensure the EC2 user has ownership of the app directory and files
 echo "Ensuring correct permissions for the app directory..."
@@ -83,10 +84,10 @@ for i in {1..10}; do
 done
 
 LOG_GROUP="/aws/code-deploy/logs"
-aws logs create-log-group --log-group-name "$LOG_GROUP" || true
-aws logs create-log-stream --log-group-name "$LOG_GROUP" --log-stream-name "DeployLog" || true
+aws logs create-log-group --log-group-name "$LOG_GROUP" --region "$AWS_REGION" || true
+aws logs create-log-stream --log-group-name "$LOG_GROUP" --log-stream-name "DeployLog" --region "$AWS_REGION" || true
 aws logs put-log-events --log-group-name "$LOG_GROUP" --log-stream-name "DeployLog" \
-    --log-events timestamp=$(date +%s%3N),message="Application started successfully."
+    --log-events timestamp=$(date +%s%3N),message="Application started successfully." --region "$AWS_REGION"
 
 #timestamped logging
 echo "$(date) - Application started" >> "$LOG_FILE"
